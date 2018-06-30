@@ -82,6 +82,8 @@ $(".btn-character").on("click", function () {
         game.playerCharacter = $(this).val();
         console.log(game.playerCharacter);
         console.log(game.isPlayerCharacterChosen);
+        var chosenChar = $(this).detach();
+        chosenChar.appendTo(".selectedCharacter");
     }
 })
 
