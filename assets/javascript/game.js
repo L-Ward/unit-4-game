@@ -121,12 +121,11 @@ function attack () {
     game.characters[game["defender"]].health = defenderHealth - playerAttack;
     console.log(game.characters[game["defender"]].health);
     //push currentDefenderHealth to object and display on button
-    
-    $("btn-" + game.playerCharacter)
+    $(".health" + game.defender).text(game.characters[game["defender"]].health);
     //subtract defender attack from player health
     game.characters[game["playerCharacter"]].health = playerHealth - defenderAttack;
     console.log(game.characters[game["playerCharacter"]].health);
     //push currentPlayerHealth to object and display on button
-
+    $(".health" + game.playerCharacter).text(game.characters[game["playerCharacter"]].health);
 }
 
