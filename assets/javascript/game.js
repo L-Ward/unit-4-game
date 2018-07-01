@@ -53,7 +53,16 @@ var game = {
     isDefenderChosen: false
 }
 
-
+//intialize the game
+function initializeGame() {
+    game.playerCharacter = "";
+    game.enemies = [];
+    game.defender = "";
+    game.isPlayerCharacterChosen = "false";
+    game.isDefenderChosen = "false"
+    makeButtons();
+    chooseCharacter();
+}
 
 //Assign characters to buttons
 var charMenu = $(".characterMenu")
@@ -62,18 +71,12 @@ game.characters.forEach(function (character) {
     var button = document.createElement("button");
     $(button).addClass("btn btn-character btn-" + character.id);
     $(button).attr("value", character.id);
-    $(button).text(character.name).append(character.img()).append(character.health);
+    $(button).append("<span class='name'>" + character.name + "</span>")
+    $(button).append(character.img())
+    var healthID = "health" + character.id;
+    $(button).append("<span class= '" + healthID + "'>" + character.health + "</span>");
     charMenu.append(button);
-})
-
-//intialize the game
-function initializeGame() {
-    game.playerCharacter = "";
-    game.enemies = [];
-    game.defender = "";
-    game.isPlayerCharacterChosen = "false";
-    game.isDefenderChosen = "false"
-}
+});
 
 //choose a player character
 $(".btn-character").on("click", function () {
@@ -84,6 +87,46 @@ $(".btn-character").on("click", function () {
         console.log(game.isPlayerCharacterChosen);
         var chosenChar = $(this).detach();
         chosenChar.appendTo(".selectedCharacter");
+        setEnemies();
+    } else if (game.isDefenderChosen === false) {
+        game.isDefenderChosen = true;
+        game.defender = $(this).val();
+        console.log(game.defender);
+        console.log(game.isDefenderChosen);
+        var chosenDefender = $(this).detach();
+        chosenDefender.appendTo(".defender");
     }
-})
+});
+
+//Functions:
+//create enemies list with unchosen characters
+function setEnemies () {
+    if (game.isPlayerCharacterChosen === true && game.isDefenderChosen === false) {
+        var enemies = $(".characterMenu").children().detach();
+        enemies.appendTo(".enemies")
+    }
+}
+
+$(".btn-attack").on("click", attack);
+
+//Making stuff attack each other
+function attack () {
+    var defenderObj = game.characters[game["defender"]];
+    var defenderHealth = defenderObj.health;
+    var defenderAttack = defenderObj.attack;
+    var playerObj = game.characters[game["playerCharacter"]];
+    var playerHealth = playerObj.health;
+    var playerAttack = playerObj.attack;
+    //subtract player attack from defender health
+    game.characters[game["defender"]].health = defenderHealth - playerAttack;
+    console.log(game.characters[game["defender"]].health);
+    //push currentDefenderHealth to object and display on button
+    
+    $("btn-" + game.playerCharacter)
+    //subtract defender attack from player health
+    game.characters[game["playerCharacter"]].health = playerHealth - defenderAttack;
+    console.log(game.characters[game["playerCharacter"]].health);
+    //push currentPlayerHealth to object and display on button
+
+}
 
