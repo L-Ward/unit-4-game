@@ -1,0 +1,57 @@
+body {
+    background: url(../images/splintersLair.jpg);
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: white;
+}
+
+.btn{
+    background: black;
+    color: white;
+    border: 1px solid white;
+}
+
+.btn-default:hover {
+    background: black;
+    color: #8dc34a;
+    border: 1px solid #8dc34a;
+}
+
+.btn-default:focus{
+    background: black;
+    color: #8dc34a;
+    border: 1px solid 8dc34a;
+}
+
+.btn-character {
+    margin: 5px;
+}
+
+.btn-0:hover {
+    color: #20b1ec;
+    border: 1px solid #20b1ec;
+}
+
+.btn-1:hover {
+    color: #e5322b;
+    border: 1px solid #e5322b;
+}
+
+.btn-2:hover {
+    color: #9a6da0;
+    border: 1px solid #9a6da0;
+}
+
+.btn-3:hover {
+    color: #ef9825;
+    border: 1px solid #ef9825;
+}
+
+/* media queries */
+@media only screen and (max-width: 980px) {
+    body {
+        background: black;
+    }
+
+}

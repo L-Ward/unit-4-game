@@ -98,10 +98,10 @@ function makeButtons() {
         var button = document.createElement("button");
         $(button).addClass("btn btn-character btn-" + character.id);
         $(button).attr("value", character.id);
-        $(button).append("<span class='name'>" + character.name + "</span>")
+        $(button).append("<div class='name'>" + character.name + "</div>")
         $(button).append(character.img())
         var healthID = "health" + character.id;
-        $(button).append("<span class= '" + healthID + "'>" + character.health + "</span>");
+        $(button).append("<div class= '" + healthID + "'>" + character.health + "</div>");
         charMenu.append(button);
     });
 }
