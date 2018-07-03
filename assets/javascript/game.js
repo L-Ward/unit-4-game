@@ -9,8 +9,13 @@ var game = {
                 img.src = "assets/images/Leonardo.png";
                 return img;
             },
-            health: 300,
-            attack: 25
+            health: 150,
+            attack: 0,
+            attackPower: function () {
+                this.attack += 4;
+                return this.attack;
+            },
+            counterAttack: 8
         },
         {
             name: "Raphael",
@@ -21,7 +26,12 @@ var game = {
                 return img;
             },
             health: 100,
-            attack: 5
+            attack: 0,
+            attackPower: function () {
+                this.attack += 6;
+                return this.attack;
+            },
+            counterAttack: 12
         },
         {
             name: "Donatello",
@@ -31,8 +41,13 @@ var game = {
                 img.src = "assets/images/Donatello.png";
                 return img;
             },
-            health: 100,
-            attack: 5
+            health: 180,
+            attack: 0,
+            attackPower: function () {
+                this.attack += 3;
+                return this.attack;
+            },
+            counterAttack: 6
         },
         {
             name: "Michaelangelo",
@@ -42,8 +57,13 @@ var game = {
                 img.src = "assets/images/Michaelangelo.png";
                 return img;
             },
-            health: 100,
-            attack: 5
+            health: 125,
+            attack: 0,
+            attackPower: function () {
+                this.attack += 5;
+                return this.attack;
+            },
+            counterAttack: 10
         }
     ],
     playerCharacter: "",
@@ -71,10 +91,14 @@ function initializeGame() {
     game.isDefenderChosen = false;
     game.enemiesRemaining = 3;
     game.gameOver = false;
-    game.characters[0].health = 300
-    game.characters[1].health = 100
-    game.characters[2].health = 100
-    game.characters[3].health = 100
+    game.characters[0].health = 150;
+    game.characters[1].health = 100;
+    game.characters[2].health = 180;
+    game.characters[3].health = 125;    
+    game.characters[0].attack = 0;
+    game.characters[1].attack = 0;
+    game.characters[2].attack = 0;
+    game.characters[3].attack = 0;
     $(".statusDisplayText").text("");
     clearButtons();
     makeButtons();
@@ -95,9 +119,6 @@ function makeButtons() {
     var charMenu = $(".characterMenu")
     //loop through characters array to create buttons
     game.characters.forEach(function (character) {
-        // var div = document.createElement("div")
-        // $(div).addClass("div-" + character.id);
-        // charMenu.append(div);
         var button = document.createElement("button");
         $(button).addClass("btn btn-character btn-" + character.id);
         $(button).attr("value", character.id);
@@ -138,25 +159,23 @@ function attack() {
     if (game.isPlayerCharacterChosen && game.isDefenderChosen && game.gameOver === false) {
         var defenderObj = game.characters[game["defender"]];
         var defenderHealth = defenderObj.health;
-        var defenderAttack = defenderObj.attack;
+        var defenderAttack = defenderObj.counterAttack;
         var playerObj = game.characters[game["playerCharacter"]];
         var playerHealth = playerObj.health;
-        var playerAttack = playerObj.attack;
+        var playerAttack = playerObj.attackPower();
 
         //subtract player attack from defender health
         game.characters[game["defender"]].health = defenderHealth - playerAttack;
-        console.log(game.characters[game["defender"]].health);
         //push currentDefenderHealth to object and display on button
         $(".health" + game.defender).text(game.characters[game["defender"]].health);
-        //Display player attack damage in status display
-
-
         //subtract defender attack from player health
         game.characters[game["playerCharacter"]].health = playerHealth - defenderAttack;
         //push currentPlayerHealth to object and display on button
         $(".health" + game.playerCharacter).text(game.characters[game["playerCharacter"]].health);
-        //Display defender attack damage in status display 
 
+        //Display damage done and damage take
+       
+        
         nextDefender();
         winCondition();
     }
