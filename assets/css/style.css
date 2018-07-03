@@ -1,15 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background: url(../images/splintersLair.jpg);
-    background-color: black;
+    /* background: url(../images/splintersLair.jpg);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100%; */
+    background-color: black;
     color: white;
 }
+
+/* .characterMenu {
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+/* .enemies {
+    display: flex;
+} */
 
 .btn{
     background: black;
     color: white;
     border: 1px solid white;
+    padding: 5px;
 }
 
 .btn-default:hover {
@@ -25,7 +39,7 @@ body {
 }
 
 .btn-character {
-    margin: 5px;
+    margin: 10px;
 }
 
 .btn-0:hover {
@@ -46,6 +60,20 @@ body {
 .btn-3:hover {
     color: #ef9825;
     border: 1px solid #ef9825;
+}
+
+.player {
+    max-height: auto;
+    margin: 5px 5px;
+}
+
+.npc {
+    max-height: auto;
+    margin: 5px 5px;
+}
+
+.display {
+    margin: 5px 5px;
 }
 
 /* media queries */

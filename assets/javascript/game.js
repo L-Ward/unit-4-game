@@ -95,6 +95,9 @@ function makeButtons() {
     var charMenu = $(".characterMenu")
     //loop through characters array to create buttons
     game.characters.forEach(function (character) {
+        // var div = document.createElement("div")
+        // $(div).addClass("div-" + character.id);
+        // charMenu.append(div);
         var button = document.createElement("button");
         $(button).addClass("btn btn-character btn-" + character.id);
         $(button).attr("value", character.id);
