@@ -7,6 +7,13 @@ body {
     color: white;
 }
 
+nav {
+    font-family: 'Paytone One', sans-serif;
+    text-align: center;
+    color: #8dc34a;
+    margin: 5px;
+}
+
 .container {
     width: 100%;
     background: url(../images/splintersLair.jpg);
