@@ -99,7 +99,8 @@ function initializeGame() {
     game.characters[1].attack = 0;
     game.characters[2].attack = 0;
     game.characters[3].attack = 0;
-    $(".statusDisplayText").text("");
+    $(".statusDisplay").text("");
+    $(".displayDamage").text("");
     clearButtons();
     makeButtons();
     //choose a player character and defender
@@ -119,6 +120,9 @@ function makeButtons() {
     var charMenu = $(".characterMenu")
     //loop through characters array to create buttons
     game.characters.forEach(function (character) {
+        // var div = document.createElement("div")
+        // $(div).addClass("col-xs-6 col-md-3 div-" + character.id);
+        // charMenu.append(div);
         var button = document.createElement("button");
         $(button).addClass("btn btn-character btn-" + character.id);
         $(button).attr("value", character.id);
@@ -142,7 +146,7 @@ function selections() {
         game.defender = $(this).val();
         var chosenDefender = $(this).detach();
         chosenDefender.appendTo(".defender");
-        $(".statusDisplayText").text("");
+        $(".statusDisplay").text("");
     }
 }
 
@@ -174,8 +178,8 @@ function attack() {
         $(".health" + game.playerCharacter).text(game.characters[game["playerCharacter"]].health);
 
         //Display damage done and damage take
-       
-        
+        $(".displayDamage").html("You did " + playerAttack + " damage to " + defenderObj.name + ". <br>" + defenderObj.name + " did " + defenderAttack + " damage to you.");
+
         nextDefender();
         winCondition();
     }
@@ -190,7 +194,8 @@ function nextDefender() {
     if (defenderHealth <= 0 && game.gameOver === false) {
         game.isDefenderChosen = false;
         $(".btn-" + defenderID).remove();
-        $(".statusDisplayText").text("Select the next defender.");
+        $(".statusDisplay").text("You have defeated " + defenderObj.name + ". Select the next defender.");
+        $(".displayDamage").text("");
         game.enemiesRemaining--;
     }
 }
@@ -198,9 +203,13 @@ function nextDefender() {
 //win codition
 function winCondition() {
     if (game.enemiesRemaining === 0 && game.characters[game["playerCharacter"]].health > 0) {
-        $(".statusDisplayText").text("YOU WON!!!! Game Over");
+        $(".statusDisplay").text("YOU WON!!!! Game Over");
+        $(".displayDamage").text("");
+
     } else if (game.characters[game["playerCharacter"]].health <= 0) {
         game.gameOver = true;
-        $(".statusDisplayText").text("YOU LOST!!!! Game Over");
+        $(".statusDisplay").text("YOU LOST!!!! Game Over");
+        $(".displayDamage").text("");
+
     }
 }
