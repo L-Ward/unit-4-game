@@ -3,21 +3,14 @@
 }
 
 body {
-    /* background: url(../images/splintersLair.jpg);
+    background: url(../images/splintersLair.jpg);
+    height: 100%;
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: 100%; */
+    background-size: cover;
     background-color: black;
     color: white;
 }
-
-/* .characterMenu {
-    display: flex;
-    flex-wrap: wrap;
-} */
-
-/* .enemies {
-    display: flex;
-} */
 
 .btn{
     background: black;
@@ -76,10 +69,3 @@ body {
     margin: 5px 5px;
 }
 
-/* media queries */
-@media only screen and (max-width: 980px) {
-    body {
-        background: black;
-    }
-
-}
