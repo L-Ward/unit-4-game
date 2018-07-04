@@ -121,7 +121,7 @@ $(document).ready(function () {
 
     //Assign characters to buttons
     function makeButtons() {
-        var heroPopUp = $(document.createElement("div")).addClass("container")
+        var heroPopUp = $(document.createElement("div")).addClass("container pop-up")
         var heroMenu = document.createElement("div");
         
         //loop through characters array to create buttons
@@ -136,10 +136,10 @@ $(document).ready(function () {
             var healthID = "health" + character.id;
             $(button).append("<div class= '" + healthID + "'>" + character.health + "</div>");
             $(div).append(button);
-            $(heroMenu).addClass("row");
+            $(heroMenu).addClass("row justify-content-center");
             $(heroMenu).append(div);
         });
-        $(heroPopUp).prepend("<div class='row justify-content-center'> <h1 class='col-xs-12 displayText'> Pick your hero </h1> </div>")
+        $(heroPopUp).prepend("<div class='row justify-content-center'> <h1 class='col-xs-12 display-text'> Pick your hero </h1> </div>")
         $(heroPopUp).append(heroMenu);
         $("body").append(heroPopUp);
     }
@@ -148,14 +148,12 @@ $(document).ready(function () {
         if (game.isPlayerCharacterChosen === false) {
             game.isPlayerCharacterChosen = true;
             game.playerCharacter = $(this).val();
-            var chosenChar = $(this).detach();
-            chosenChar.appendTo(".selectedCharacter");
+            $(this).parent().detach();
             setEnemies();
         } else if (game.isDefenderChosen === false && game.enemiesRemaining > 0) {
             game.isDefenderChosen = true;
             game.defender = $(this).val();
-            var chosenDefender = $(this).detach();
-            chosenDefender.appendTo(".defender");
+            $(this).parent().detach();
             $(".statusDisplay").text("");
         }
     }
@@ -163,8 +161,8 @@ $(document).ready(function () {
     //create enemies list with unchosen characters
     function setEnemies() {
         if (game.isPlayerCharacterChosen === true && game.isDefenderChosen === false) {
-            var enemies = $(".characterMenu").children().detach();
-            enemies.appendTo(".enemies")
+            $(".display-text").text("Choose your sparring partner");
+            $("body").empty();
         }
     }
 
