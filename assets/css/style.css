@@ -3,8 +3,15 @@
 }
 
 body {
+    background: url(../images/TMNT.jpg);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     background-color: black;
-    color: white;
+    color: #8dc34a;
+    text-shadow: 2px 2px black;
 }
 
 nav {
@@ -15,12 +22,7 @@ nav {
 }
 
 .container {
-    width: 100%;
-    background: url(../images/splintersLair.jpg);
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    max-width: 980px;
     font-family: 'Paytone One', sans-serif;
 }
 
@@ -30,6 +32,8 @@ nav {
     border: 1px solid white;
     padding: 5px;
     font-family: 'Paytone One', sans-serif;
+    text-shadow: 1px 1px #244c39;
+
 }
 
 .btn-default:hover {
@@ -41,7 +45,7 @@ nav {
 .btn-default:focus{
     background: black;
     color: #8dc34a;
-    border: 1px solid 8dc34a;
+    border: 1px solid #8dc34a;
 }
 
 .btn-character {
