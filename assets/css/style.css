@@ -30,10 +30,8 @@ nav {
     background: black;
     color: white;
     border: 1px solid white;
-    padding: 5px;
     font-family: 'Paytone One', sans-serif;
     text-shadow: 1px 1px #244c39;
-
 }
 
 .btn-default:hover {
@@ -46,10 +44,6 @@ nav {
     background: black;
     color: #8dc34a;
     border: 1px solid #8dc34a;
-}
-
-.btn-character {
-    margin: 10px;
 }
 
 .btn-0:hover {

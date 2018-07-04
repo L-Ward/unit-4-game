@@ -127,7 +127,7 @@ $(document).ready(function () {
         //loop through characters array to create buttons
         game.characters.forEach(function (character) {
             var div = document.createElement("div")
-            $(div).addClass("col-xs-6 col-md-3 div-" + character.id);
+            $(div).addClass("col-xs-6 col-md-3 text-center div-" + character.id);
             var button = document.createElement("button");
             $(button).addClass("btn btn-character btn-" + character.id);
             $(button).attr("value", character.id);
@@ -139,7 +139,7 @@ $(document).ready(function () {
             $(heroMenu).addClass("row");
             $(heroMenu).append(div);
         });
-        $(heroPopUp).prepend("<div class='row'> <div class='col-sm-2 offset-sm-6'> Pick your hero </div> </div>")
+        $(heroPopUp).prepend("<div class='row justify-content-center'> <h1 class='col-xs-12 displayText'> Pick your hero </h1> </div>")
         $(heroPopUp).append(heroMenu);
         $("body").append(heroPopUp);
     }
