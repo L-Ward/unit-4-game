@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+body {
+    background: url(../images/TMNT.jpg);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: black;
+    color: #8dc34a;
+    text-shadow: 2px 2px black;
+}
+
+.container {
+    max-width: 980px;
+    font-family: 'Paytone One', sans-serif;
+}
+
+.btn{
+    background: black;
+    color: white;
+    border: 1px solid white;
+    font-family: 'Paytone One', sans-serif;
+    text-shadow: 1px 1px #244c39;
+}
+
+.btn-default:hover {
+    background: black;
+    color: #8dc34a;
+    border: 1px solid #8dc34a;
+}
+
+.btn-default:focus{
+    background: black;
+    color: #8dc34a;
+    border: 1px solid #8dc34a;
+}
+
+.btn-0:hover {
+    color: #20b1ec;
+    border: 1px solid #20b1ec;
+}
+
+.btn-1:hover {
+    color: #e5322b;
+    border: 1px solid #e5322b;
+}
+
+.btn-2:hover {
+    color: #9a6da0;
+    border: 1px solid #9a6da0;
+}
+
+.btn-3:hover {
+    color: #ef9825;
+    border: 1px solid #ef9825;
+}
+
+.combat-log {
+    background: black;
+    color: white;
+    border: 1px solid white;
+    font-family: 'Paytone One', sans-serif;
+    min-height: 100px;
+    width: 75%;
+    text-align: center;
+}

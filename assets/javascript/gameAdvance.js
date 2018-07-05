@@ -78,8 +78,7 @@ $(document).ready(function () {
         gameOver: false
     }
 
-    selectionMenuBuilder(game.characters, "Pick your hero");
-
+    dataReset();
 
     //functions
     //data reset function
@@ -101,6 +100,8 @@ $(document).ready(function () {
         game.characters[1].attack = 0;
         game.characters[2].attack = 0;
         game.characters[3].attack = 0;
+        empty();
+        selectionMenuBuilder(game.characters, "Pick your hero");
     }
 
     //BUILDERS -- Screen Builders
@@ -129,9 +130,14 @@ $(document).ready(function () {
 
     //game screen builder after all selections are made
     function gameScreenBuilder() {
-
+        //create container div for bootstrap display
+        var containerDiv = $(document.createElement("div")).addClass("container");
+        //append container to body
+        $("body").append(containerDiv);
+        //populate container div
+        $(containerDiv).append(versusRowBuilder(), combatLogRowBuilder(), enemiesRowBuilder());
     }
-    
+
     //BUILDERS -- Element builders
     //button builder function
     function charBtnBuilder(character) {
@@ -146,23 +152,76 @@ $(document).ready(function () {
 
     //versus row builder function
     function versusRowBuilder() {
+        //top row
         var vsRow = $(document.createElement("div")).addClass("row justify-content-center");
-        var vsPlayerCol = $(document.createElement("div")).addClass("col");
-        var vsBtnCol = $(document.createElement("div")).addClass("col");
-        var vsDefenderCol = $(document.createElement("div")).addClass("col");
-        var playerHeader = $(document.createElement("h3").addClass("display-text"));
+        //creating columns x3
+        var vsPlayerCol = $(document.createElement("div")).addClass("col-xs-12 col-md-4 text-center");
+        var vsBtnCol = $(document.createElement("div")).addClass("col-xs-12 col-md-4 text-center align-self-center");
+        var vsDefenderCol = $(document.createElement("div")).addClass("col-xs-12 col-md-4 text-center");
+        //content for column 1 -- PC 
+        var playerHeader = $(document.createElement("h3")).addClass("display-text").text("Hero");
         var playerBody = charBtnBuilder(game.characters[game.playerCharacter]);
-
+        //content for column 2  -- buttons 
+        //divs for vs content
+        var vsHeaderDiv = document.createElement("div");
+        var vsAtkBtnDiv = document.createElement("div");
+        var vsRestartBtnDiv = document.createElement("div");
+        //content
+        var vsHeader = $(document.createElement("h3")).addClass("display-text").text("vs");
+        var vsAtkBtn = $(document.createElement("button")).addClass("btn btn-default btn-attack").text("Attack").on("click", attack);
+        var vsRestartBtn = $(document.createElement("button")).addClass("btn btn-default btn-restart").text("Restart").on("click", dataReset);
+        //content for column 3 -- defender 
+        var defenderHeader = $(document.createElement("h3")).addClass("display-text").text("Defender");
+        var defenderBody = charBtnBuilder(game.characters[game.defender]);
+        //appending
+        $(vsRow).append(vsPlayerCol, vsBtnCol, vsDefenderCol);
+        $(vsPlayerCol).append(playerHeader, playerBody);
+        $(vsBtnCol).append(vsHeaderDiv, vsAtkBtnDiv, vsRestartBtnDiv);
+        $(vsHeaderDiv).append(vsHeader);
+        $(vsAtkBtnDiv).append(vsAtkBtn);
+        $(vsRestartBtnDiv).append(vsRestartBtn);
+        $(vsDefenderCol).append(defenderHeader, defenderBody);
+        //return parent element
+        return vsRow;
     }
 
     //combat log builder
     function combatLogRowBuilder() {
 
+        var combatLogDiv = document.createElement("div");
+        //create combat rows
+        var combatHeaderRow = $(document.createElement("div")).addClass("row justify-content-center");
+        var combatBodyRow = $(document.createElement("div")).addClass("row justify-content-center");
+        //create combat column
+        var combatLogHeader = $(document.createElement("h3")).addClass("display-text").text("Combat Log");
+        var combatLogBody = $(document.createElement("div")).addClass("col-xs-12 combat-log body-text");
+        //append
+        $(combatHeaderRow).append(combatLogHeader);
+        $(combatBodyRow).append(combatLogBody);
+        $(combatLogDiv).append(combatHeaderRow, combatBodyRow);
+        //return parent element
+        return combatLogDiv;
     }
 
     //enemies row builder
     function enemiesRowBuilder() {
+        var enemiesDiv = document.createElement("div");
+        //create rows
+        var enemiesHeaderRow = $(document.createElement("div")).addClass("row justify-content-center");
+        var enemiesBodyRow = $(document.createElement("div")).addClass("row justify-content-center");
 
+        //columns for enemies display
+        var enemiesHeader = $(document.createElement("h3")).addClass("display-text").text("Remaining Enemies");
+        //appending
+        $(enemiesHeaderRow).append(enemiesHeader);
+        game.enemiesArr.forEach(function (character) {
+            var btnDiv = $(document.createElement("div")).addClass("col-xs-6 col-md-3 text-center");
+            $(btnDiv).append(charBtnBuilder(character));
+            $(enemiesBodyRow).append(btnDiv);
+        });
+
+        $(enemiesDiv).append(enemiesHeaderRow, enemiesBodyRow);
+        return enemiesDiv;
     }
 
     //HANDLERS
@@ -193,10 +252,73 @@ $(document).ready(function () {
                 }
             });
             empty();
+            gameScreenBuilder();
         }
     }
 
-    //RANDOM
+    //attack handler
+    function attack() {
+        if (game.isPlayerCharacterChosen && game.isDefenderChosen && game.gameOver === false) {
+            var defenderObj = game.characters[game["defender"]];
+            var defenderHealth = defenderObj.health;
+            var defenderAttack = defenderObj.counterAttack;
+            var playerObj = game.characters[game["playerCharacter"]];
+            var playerHealth = playerObj.health;
+            var playerAttack = playerObj.attackPower();
+
+            //subtract player attack from defender health
+            game.characters[game["defender"]].health = defenderHealth - playerAttack;
+            //push currentDefenderHealth to object and display on button
+            $(".health-" + game.defender).text(game.characters[game["defender"]].health);
+            //subtract defender attack from player health
+            game.characters[game["playerCharacter"]].health = playerHealth - defenderAttack;
+            //push currentPlayerHealth to object and display on button
+            $(".health-" + game.playerCharacter).text(game.characters[game["playerCharacter"]].health);
+
+            //Display damage done and damage take
+            $(".combat-log").html("You did " + playerAttack + " damage to " + defenderObj.name + ". <br>" + defenderObj.name + " did " + defenderAttack + " damage to you.");
+
+            nextDefender();
+            winCondition();
+        }
+    }
+
+    //RANDOM FUNCTIONS
+    //Pick next defender
+    function nextDefender() {
+        var defenderObj = game.characters[game["defender"]];
+        var defenderHealth = defenderObj.health;
+        var defenderID = defenderObj.id;
+
+        if (defenderHealth <= 0 && game.gameOver === false) {
+            game.isDefenderChosen = false;
+            $(".btn-" + defenderID).remove();
+            $(".combat-log").text("You have defeated " + defenderObj.name + ". Select the next defender.");
+            game.enemiesRemaining--;
+            //set on click event listener to enemies buttons
+            game.characters.forEach(function (character) {
+                if (game.enemies[character.id] === true) {
+                    //empty defenderArr
+                    game.enemiesArr = [];
+                    $(".btn-" + character.id).on("click", charBtnHandler);
+                }
+            });
+        }
+    }
+
+    //win codition
+    function winCondition() {
+        if (game.enemiesRemaining === 0 && game.characters[game["playerCharacter"]].health > 0) {
+            game.gameOver = true;
+            $(".combat-log").text("YOU WON!!!! Game Over");
+
+        } else if (game.characters[game["playerCharacter"]].health <= 0) {
+            game.gameOver = true;
+            $(".combat-log").text("YOU LOST!!!! Game Over");
+
+        }
+    }
+
     function empty() {
         $("body").empty();
     }
